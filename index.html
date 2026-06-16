@@ -3,68 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>徐聖傑的 MyApps 應用總覽</title>
-    <!-- 引入 Tailwind CSS 讓畫面變好看 -->
+    <title>健康 BMI 計算機</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <style>
-        .card-hover { transition: all 0.3s ease; }
-        .card-hover:hover { transform: translateY(-8px); box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1); }
-    </style>
 </head>
-<body class="bg-slate-50 min-h-screen text-slate-800 font-sans">
-
-    <!-- 頁首標題 -->
-    <header class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-12 px-4 text-center shadow-md">
-        <h1 class="text-4xl font-extrabold tracking-tight md:text-5xl">【1113211061/徐聖傑】的 MyApps 應用總覽</h1>
-        <p class="mt-3 text-blue-100 text-lg">網頁前端期末專題成果發表</p>
-    </header>
-
-    <!-- 卡片內容區區 -->
-    <main class="max-w-6xl mx-auto px-4 py-12">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            
-            <!-- 卡片 1：BMI 計算機 -->
-            <div class="card-hover bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden flex flex-col justify-between">
-                <div class="p-6">
-                    <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center font-bold text-xl mb-4">⚖️</div>
-                    <h3 class="text-xl font-bold text-slate-900 mb-2">健康 BMI 計算機</h3>
-                    <p class="text-slate-600 text-sm leading-relaxed">輸入身高與體重，即時計算出您的 BMI 值，並提供貼心的健康狀態建議與分類。</p>
-                </div>
-                <div class="p-6 pt-0">
-                    <a href="./bmi/index.html" class="block w-full text-center bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2.5 px-4 rounded-xl transition-colors">開啟應用程式</a>
-                </div>
+<body class="bg-emerald-50 min-h-screen flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl shadow-lg p-8 max-w-md w-full">
+        <a href="../index.html" class="text-emerald-600 hover:underline text-sm font-medium">← 返回首頁</a>
+        <h2 class="text-2xl font-bold text-slate-800 mt-4 mb-6 text-center">⚖️ 健康 BMI 計算機</h2>
+        
+        <div class="space-y-4">
+            <div>
+                <label class="block text-sm font-medium text-slate-700 mb-1">身高 (公分)</label>
+                <input type="number" id="height" placeholder="例如：175" class="w-full border border-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:border-emerald-500">
             </div>
-
-            <!-- 卡片 2：倒數計時器 -->
-            <div class="card-hover bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden flex flex-col justify-between">
-                <div class="p-6">
-                    <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-xl flex items-center justify-center font-bold text-xl mb-4">⏱️</div>
-                    <h3 class="text-xl font-bold text-slate-900 mb-2">實用倒數計時器</h3>
-                    <p class="text-slate-600 text-sm leading-relaxed">自訂秒數進行倒數，支援隨時暫停與重設，是專注工作、泡麵、運動時的絕佳小幫手。</p>
-                </div>
-                <div class="p-6 pt-0">
-                    <a href="./timer/index.html" class="block w-full text-center bg-amber-500 hover:bg-amber-600 text-white font-medium py-2.5 px-4 rounded-xl transition-colors">開啟應用程式</a>
-                </div>
+            <div>
+                <label class="block text-sm font-medium text-slate-700 mb-1">體重 (公斤)</label>
+                <input type="number" id="weight" placeholder="例如：65" class="w-full border border-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:border-emerald-500">
             </div>
-
-            <!-- 卡片 3：猜數字遊戲 -->
-            <div class="card-hover bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden flex flex-col justify-between">
-                <div class="p-6">
-                    <div class="w-12 h-12 bg-rose-100 text-rose-600 rounded-xl flex items-center justify-center font-bold text-xl mb-4">🎮</div>
-                    <h3 class="text-xl font-bold text-slate-900 mb-2">終極密碼猜數字</h3>
-                    <p class="text-slate-600 text-sm leading-relaxed">經典的 1-100 猜數字遊戲！系統會自動幫你鎖定終極密碼的範圍，挑戰看看你需要幾次才能猜中？</p>
-                </div>
-                <div class="p-6 pt-0">
-                    <a href="./game/index.html" class="block w-full text-center bg-rose-500 hover:bg-rose-600 text-white font-medium py-2.5 px-4 rounded-xl transition-colors">開始挑戰遊戲</a>
-                </div>
-            </div>
-
+            <button onclick="calcBMI()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-3 rounded-xl transition-colors mt-2">開始計算</button>
         </div>
-    </main>
 
-    <footer class="text-center py-8 text-slate-400 text-sm border-t border-slate-200 mt-12">
-        &copy; 2026 我的網頁前端期末專題. All rights reserved.
-    </footer>
+        <div id="resultBox" class="mt-6 p-4 rounded-xl bg-slate-50 text-center hidden">
+            <p class="text-slate-500 text-sm">您的 BMI 值為</p>
+            <p id="bmiValue" class="text-3xl font-extrabold text-emerald-600 my-1">0.0</p>
+            <p id="bmiStatus" class="font-bold text-slate-700"></p>
+        </div>
+    </div>
 
+    <script>
+        function calcBMI() {
+            const h = parseFloat(document.getElementById('height').value) / 100;
+            const w = parseFloat(document.getElementById('weight').value);
+            if(!h || !w) { alert('請輸入完整的身高與體重！'); return; }
+            
+            const bmi = (w / (h * h)).toFixed(1);
+            document.getElementById('bmiValue').innerText = bmi;
+            
+            let status = "";
+            if(bmi < 18.5) status = "體重過輕，多吃點營養的食物吧！";
+            else if(bmi < 24) status = "太棒了！您的體重在正常範圍內。";
+            else if(bmi < 27) status = "過重囉，記得多運動保持健康！";
+            else status = "肥胖警告，為了健康要開始控制飲食囉！";
+            
+            document.getElementById('bmiStatus').innerText = status;
+            document.getElementById('resultBox').classList.remove('hidden');
+        }
+    </script>
 </body>
 </html>
