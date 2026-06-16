@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>終極密碼猜數字</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-rose-50 min-h-screen flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl shadow-lg p-8 max-w-md w-full text-center">
+        <a href="../index.html" class="text-rose-600 hover:underline text-sm font-medium block text-left">← 返回首頁</a>
+        <h2 class="text-2xl font-bold text-slate-800 mt-4 mb-4">🎮 終極密碼</h2>
+        
+        <p class="text-slate-500 text-sm mb-2">目前範圍</p>
+        <div class="text-3xl font-extrabold text-rose-500 mb-6" id="rangeBox">1 ~ 100</div>
+
+        <div class="space-y-4 mb-4">
+            <input type="number" id="guessInput" placeholder="輸入你想猜的數字" class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-center text-xl focus:outline-none focus:border-rose-500">
+            <button onclick="checkGuess()" class="w-full bg-rose-500 hover:bg-rose-600 text-white font-medium py-3 rounded-xl transition-colors">送出答案</button>
+        </div>
+
+        <p id="hintMessage" class="text-slate-600 font-medium min-h-[24px] mb-4"></p>
+        <button onclick="initGame()" class="text-xs text-slate-400 hover:text-slate-600 underline">重新新局</button>
+    </div>
+
+    <script>
+        let answer, min, max, count;
+
+        function initGame() {
+            answer = Math.floor(Math.random() * 100) + 1;
+            min = 1;
+            max = 100;
+            count = 0;
+            document.getElementById('guessInput').value = '';
+            document.getElementById('hintMessage').innerText = '遊戲開始！請輸入 1~100 之間的數字。';
+            updateRange();
+        }
+
+        function updateRange() {
+            document.getElementById('rangeBox').innerText = `${min} ~ ${max}`;
+        }
+
+        function checkGuess() {
+            const input = parseInt(document.getElementById('guessInput').value);
+            if (isNaN(input) || input < min || input > max) {
+                alert(`請輸入有效範圍內 (${min}~${max}) 的數字！`);
+                return;
+            }
+            
+            count++;
+            if (input === answer) {
+                document.getElementById('hintMessage').innerHTML = `🎉 恭喜答對！答案就是 <b>${answer}</b>！<br>共猜了 ${count} 次。`;
+                document.getElementById('rangeBox').innerText = '🎉 SUCCESS';
+            } else if (input < answer) {
+                min = input + 1;
+                document.getElementById('hintMessage').innerText = '太小囉！再大一點點。';
+                updateRange();
+            } else {
+                max = input - 1;
+                document.getElementById('hintMessage').innerText = '太大囉！再小一點點。';
+                updateRange();
+            }
+            document.getElementById('guessInput').value = '';
+        }
+
+        // 初始化遊戲
+        initGame();
+    </script>
+</body>
+</html>

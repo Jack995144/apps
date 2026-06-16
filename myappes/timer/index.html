@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>實用倒數計時器</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-amber-50 min-h-screen flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl shadow-lg p-8 max-w-md w-full text-center">
+        <a href="../index.html" class="text-amber-600 hover:underline text-sm font-medium block text-left">← 返回首頁</a>
+        <h2 class="text-2xl font-bold text-slate-800 mt-4 mb-6">⏱️ 實用倒數計時器</h2>
+        
+        <div class="text-5xl font-mono font-bold text-amber-500 my-8" id="display">00</div>
+
+        <div class="flex gap-2 justify-center mb-6">
+            <button onclick="setTime(10)" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg text-sm font-medium">10秒</button>
+            <button onclick="setTime(30)" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg text-sm font-medium">30秒</button>
+            <button onclick="setTime(60)" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg text-sm font-medium">1分鐘</button>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+            <button id="startBtn" onclick="toggleTimer()" class="bg-amber-500 hover:bg-amber-600 text-white font-medium py-3 rounded-xl transition-colors">開始</button>
+            <button onclick="resetTimer()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-medium py-3 rounded-xl transition-colors">重設</button>
+        </div>
+    </div>
+
+    <script>
+        let timeLeft = 0;
+        let timerId = null;
+
+        function setTime(sec) {
+            clearInterval(timerId);
+            timerId = null;
+            timeLeft = sec;
+            updateDisplay();
+            document.getElementById('startBtn').innerText = '開始';
+        }
+
+        function updateDisplay() {
+            document.getElementById('display').innerText = timeLeft < 10 ? '0' + timeLeft : timeLeft;
+        }
+
+        function toggleTimer() {
+            if(timeLeft <= 0) { alert('請先選擇或設定時間！'); return; }
+            if (timerId) {
+                clearInterval(timerId);
+                timerId = null;
+                document.getElementById('startBtn').innerText = '繼續';
+            } else {
+                document.getElementById('startBtn').innerText = '暫停';
+                timerId = setInterval(() => {
+                    timeLeft--;
+                    updateDisplay();
+                    if (timeLeft <= 0) {
+                        clearInterval(timerId);
+                        timerId = null;
+                        alert('⏰ 時間到囉！');
+                        document.getElementById('startBtn').innerText = '開始';
+                    }
+                }, 1000);
+            }
+        }
+
+        function resetTimer() {
+            clearInterval(timerId);
+            timerId = null;
+            timeLeft = 0;
+            updateDisplay();
+            document.getElementById('startBtn').innerText = '開始';
+        }
+    </script>
+</body>
+</html>
